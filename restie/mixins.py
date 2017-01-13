@@ -4,6 +4,7 @@ from .constants import ALL_HTTP_METHODS
 
 
 class HttpCORSMixin(HttpRequestHandler):
+    # @TODO rewrite into nameko Entrypoint (restie module named DecoratorEntrypoint)
     def _methods(self, default=None):
         _methods = []
         map(lambda z: _methods.extend(getattr(self, z, [None])), ['method', 'methods', 'METHOD', 'METHODS'])

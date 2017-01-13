@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='nameko-restie',
-    version='0.1',
+    version='0.1-beta',
     description='@TODO',
     long_description='@TODO',
     author='Fill Q',
