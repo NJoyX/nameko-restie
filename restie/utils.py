@@ -4,6 +4,19 @@ from nameko.exceptions import IncorrectSignature
 from werkzeug.utils import import_string
 
 
+class _const:
+    class ConstError(TypeError):
+        pass
+
+    def __setattr__(self, name, value):
+        if name in self.__dict__:
+            raise self.ConstError("Can't rebind const(%s)" % name)
+        self.__dict__[name] = value
+
+
+CONSTANTS = _const()
+
+
 def check_signature(fn, args, kwargs):
     try:
         inspect.getcallargs(fn, *args, **kwargs)
@@ -23,6 +36,7 @@ def response_triple(result):
         status = 200
 
     return status, headers, payload
+
 
 prefix_urls = lambda z: ('/api/%s/' % z).replace('//', '/')
 
