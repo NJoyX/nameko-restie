@@ -3,8 +3,8 @@ from __future__ import unicode_literals, print_function, absolute_import
 from collections import OrderedDict
 
 from nameko.exceptions import safe_for_serialization
-from restie.utils import json
 from restie.exceptions import HttpError
+from restie.utils import json
 from restie.utils import response_triple
 from werkzeug.wrappers import Response
 
@@ -41,7 +41,7 @@ class JSONify(MethodsDecoratorEntrypoint):
         if not isinstance(headers, dict):
             headers = {}
 
-        if isinstance(payload, (dict, list, tuple, set, int)) or payload is None or payload is True or payload is False:
+        if isinstance(payload, (dict, list, tuple, int, float)) or payload in (None, True, False):
             try:
                 payload = json.dumps(
                     payload,
