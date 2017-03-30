@@ -25,7 +25,7 @@ setup(
         ],
     },
     include_package_data=True,
-    zip_safe=True,
+    zip_safe=False,
     keywords=['nameko', 'restie', 'rest', 'werkzeug'],
     classifiers=[
         "Operating System :: MacOS :: MacOS X",
