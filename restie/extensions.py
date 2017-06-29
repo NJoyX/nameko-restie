@@ -37,12 +37,16 @@ class HttpRequestExtension(HttpRequestHandler):
 class HttpEntrypoint(HttpRequestExtension, HttpCORSMixin):
     server = WebServer()
 
+    @property
+    def is_debug(self):
+        return bool(self.container.config.get('DEBUG', os.environ.get('DEBUG', False))) is True
+
     def handle_request(self, request):
         return HttpCORSMixin.handle_request(self, request)
 
     def response_from_exception(self, exc):
-        if 'DEBUG' in os.environ:
-            six.reraise(*sys.exc_info()[:2])
+        if self.is_debug:
+            six.reraise(*sys.exc_info())
         response = super(HttpEntrypoint, self).response_from_exception(exc)
         if hasattr(exc, 'status_code'):
             response.status_code = exc.status_code

@@ -46,8 +46,12 @@ class WebServer(NamekoWebServer):
             self._serv = self.get_wsgi_server(self._sock, self.get_wsgi_app())
             self._gt = self.container.spawn_managed_thread(self.run)
 
+    @property
+    def is_debug(self):
+        return bool(self.container.config.get('DEBUG', os.environ.get('DEBUG', False))) is True
+
     def get_wsgi_app(self):
         wsgi_app = super(WebServer, self).get_wsgi_app()
-        if 'DEBUG' in os.environ:
+        if self.is_debug:
             return DebuggedApplication(wsgi_app, evalex=True)
         return wsgi_app

@@ -22,6 +22,7 @@ class API(ServiceDependencyProvider):
 
     @classmethod
     def model(cls, name, fields=None, **kw_fields):
-        if isinstance(fields, dict):
-            fields.update(kw_fields)
-        return type(name, (BaseRestModel,), fields)
+        if fields is None:
+            fields = dict()
+        fields.update(kw_fields)
+        return type(str(name), (BaseRestModel,), fields)

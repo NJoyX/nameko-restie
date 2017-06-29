@@ -66,7 +66,7 @@ class DecoratorCollector(ProviderCollector, SharedExtension):
         if result is not None or isinstance(result, Response):
             return result
 
-        six.reraise(*sys.exc_info()[:2])
+        six.reraise(*sys.exc_info())
 
 
 class DecoratorEntrypoint(Entrypoint):
